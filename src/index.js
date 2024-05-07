@@ -1,51 +1,47 @@
-fetch("http://localhost:3000/ramens")
-  .then(resp => resp.json())
-  .then(ramens => renderRamens(ramens))
+const ramenAPI = 'http://localhost:3000/ramens'
+const ramenMenuDiv = el('ramen-menu');
 
-  const newRamenForm = document.querySelector("#new-ramen")
-  newRamenForm.addEventListener('submit', handleNewRamen)
+el('new-ramen').addEventListener('submit', newRamenHandler);
 
+fetch(ramenAPI)
+.then(res => res.json())
+.then(renderRamens);
 
-const renderRamens = (ramens) => {
-  console.log(ramens)
-  ramens.forEach(ramens => {
-    const image = document.createElement('img')
-    image.src = ramen.image
-    const ramenMenu = document.querySelector('#ramen-menu')
-    ramenMenu.appendChild(image)
-    image.addEventListener('click', () => renderDetails(ramen))
-  })
+function renderRamens(ramens) {
+  ramens.forEach(renderRamen);
 }
 
-const renderDetails = (ramen) => {
-  console.log(ramen)
-  const ramenImage = document.querySelector(".detail-image")
-  ramenImage.src = ramen.image
-  const ramenName = document.querySelector(".name")
-  ramenName.innerText = ramen.name
-  const ramenRestaurant = document.querySelector(".restaurant")
-  ramenRestaurant.innerText = ramen.restaurant
-  const ramenRating = document.querySelector("#rating-display")
-  ramenRating.innerText = ramen.rating
-  const ramenComment = document.querySelector("#comment-display")
-  ramenComment.innerText = ramen.comment
-  //console.log(ramenImage)
+function renderRamen(ramen) {
+  const ramenImageElement = document.createElement('img')
+  ramenImageElement.src = ramen.image;
+  ramenMenuDiv.append(ramenImageElement);
+
+  ramenImageElement.addEventListener('click', () => ramenClickHandler(ramen));
 }
 
-function handleNewRamen(e) {
-  e.preventDefault()
-  const newName = document.querySelector("#new-name").value
-  const newRestaurant = document.querySelector("#new-restaurant").value
-  const newImage = document.querySelector("#new-image").value
-
-let newRamen = {
-  name: newName,
-  restaurant: newRestaurant,
-  image:newImage,
-  rating: e.target.rating.value,
-  comment: e.target("new-comment").value
+function addRamenListener(ramen) {
+  el('detail-image').src = ramen.image;
+  el('detail-name').textContent = ramen.name;
+  el('detail-restaurant').textContent = ramen.restaurant;
+  el('rating-display').textContent = ramen.rating;
+  el('comment-display').textcontent = ramen.comment;
 }
 
-console.log(newRamen)
+function newRamenHandler(e) {
+  e.preventDefault();
 
-}
+  const newRamen = {
+    comment: e.target['new-comment'].value,
+    image: e.target.image.value,
+    name: e.target.name.value,
+    rating: e.target.rating.value,
+    restaurant: e.target.restaurant.value,
+  };
+
+  renderRamen(newRamen);
+  e.target.reset();
+  };
+
+  function el(id){
+    return document.getElementById(id);
+  }
