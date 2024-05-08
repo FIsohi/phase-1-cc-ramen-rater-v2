@@ -1,6 +1,6 @@
 const API = "http://localhost:3000/ramens";
 
-el('new-ramen').addEventListener('submit', createNewRamen);
+el("new-ramen").addEventListener("submit", createNewRamen);
 
 //Load in the ramens from the API
 fetch(API)
