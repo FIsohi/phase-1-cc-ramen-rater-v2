@@ -46,8 +46,11 @@ function createNewRamen(e) {
     comment: e.target("new-comment").value,
   };
   renderRamen(newRamen);
+  e.target.clear();
+
 }
 
 function el(elementName) {
-  
+  return document.getElementById(elementName);
+
 }
