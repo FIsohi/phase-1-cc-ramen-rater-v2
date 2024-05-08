@@ -1,10 +1,9 @@
-const ramenAPI = 'http://localhost:3000/ramens'
-const ramenMenuDiv = el('ramen-menu');
+const API = "http://localhost:3000/ramens";
 
-el('new-ramen').addEventListener('submit', newRamenHandler);
+el('new-ramen').addEventListener('submit', createNewRamen);
 
-fetch(ramenAPI)
-.then(res => res.json())
+fetch(API)
+.then((res) => res.json())
 .then(renderRamens);
 
 function renderRamens(ramens) {
@@ -12,36 +11,43 @@ function renderRamens(ramens) {
 }
 
 function renderRamen(ramen) {
-  const ramenImageElement = document.createElement('img')
-  ramenImageElement.src = ramen.image;
-  ramenMenuDiv.append(ramenImageElement);
+  const ramenMenuDiv = el("ramen-menu");
 
-  ramenImageElement.addEventListener('click', () => ramenClickHandler(ramen));
+  const ramenImage = document.createElement("img");
+  ramenImage.src = ramen.image;
+  ramenMenuDiv.append(ramenimage);
+
+  ramenImage.addEventListener("click", (e) => renderDetails(ramen));
 }
 
-function addRamenListener(ramen) {
-  el('detail-image').src = ramen.image;
-  el('detail-name').textContent = ramen.name;
-  el('detail-restaurant').textContent = ramen.restaurant;
-  el('rating-display').textContent = ramen.rating;
-  el('comment-display').textcontent = ramen.comment;
+function renderDetails(ramen) {
+  const detailImage = el("detail-image");
+  const ramenName = el("ramen-name");
+  const restaurantName = el("restaurant-name");
+  const ratingDisplay = el("rating-display");
+  const commentDisplay = el("comment-display");
+
+  detailImage.src = ramen.image;
+  detailImage.alt = ramen.name;
+  ramenName.textcontent = ramen.name;
+  restaurantName.textcontent = ramen.restaurant;
+  ratingDisplay.textcontent = ramen.rating;
+  commentDisplay.textcontent = ramen.comment;
 }
 
-function newRamenHandler(e) {
+function createNewRamen(e) {
   e.preventDefault();
 
   const newRamen = {
-    comment: e.target['new-comment'].value,
-    image: e.target.image.value,
     name: e.target.name.value,
     rating: e.target.rating.value,
     restaurant: e.target.restaurant.value,
+    image: e.target.image.value,
+    comment: e.target("new-comment").value,
   };
-
   renderRamen(newRamen);
-  e.target.reset();
-  };
+}
 
-  function el(id){
-    return document.getElementById(id);
-  }
+function el(elementName) {
+  
+}
