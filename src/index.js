@@ -2,20 +2,23 @@ const API = "http://localhost:3000/ramens";
 
 el('new-ramen').addEventListener('submit', createNewRamen);
 
+//Load in the ramens from the API
 fetch(API)
 .then((res) => res.json())
 .then(renderRamens);
 
+//Iterate through each of the ramens
 function renderRamens(ramens) {
   ramens.forEach(renderRamen);
 }
 
+//Display each one in an image tag in the ramen-menu div
 function renderRamen(ramen) {
   const ramenMenuDiv = el("ramen-menu");
 
   const ramenImage = document.createElement("img");
   ramenImage.src = ramen.image;
-  ramenMenuDiv.append(ramenimage);
+  ramenMenuDiv.append(ramenImage);
 
   ramenImage.addEventListener("click", (e) => renderDetails(ramen));
 }
